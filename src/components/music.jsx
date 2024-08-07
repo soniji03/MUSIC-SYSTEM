@@ -143,105 +143,129 @@ useEffect(() => {
     position: 'relative',
     height: '100vh',
     width: '100%',
-    
+    overflow: 'hidden',
   };
   
-    const videoStyle = {
-      position: 'absolute',
-      width: '100%',
-      height: '100%',
-      objectFit: 'cover',
-      opacity: 0.9,
-    };
-
-  return (
+  const videoStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    minWidth: '100%',
+    minHeight: '100%',
+    width: 'auto',
+    height: 'auto',
+    objectFit: 'cover',
+    opacity: 0.9,
+  };
   
-
-    <div style={backgroundStyle} className="flex justify-center h-screen sm:mx-auto sm-w-full"> 
-
-    <video autoPlay loop muted style={videoStyle} className='sm-w-[100%]'>
-    <source src="/v1.mp4" type="video/mp4" />
-  </video>
-
-      <div className=" bg-transparent rounded-lg  space-y-3 z-50 max-w-[32rem] my-20 ">
-
-      <div className="flex space-x-1.5 ">
+  return (
+    <div style={backgroundStyle} className="flex justify-center h-screen w-full">
+      <video autoPlay loop muted style={videoStyle}>
+        <source src="/v1.mp4" type="video/mp4" />
+      </video>
+      
+      <div className="bg-transparent rounded-lg space-y-3 z-50 max-w-[32rem] my-20 px-4 w-full sm:px-0">
+        <div className="flex space-x-1.5">
           {[...Array(1)].map((_, index) => (
             <dotlottie-player
               key={index}
               ref={el => lottieRefs.current[index] = el}
-              src="https://lottie.host/9e0025fc-4108-4796-a385-68eed2cc5a47/Cyz39vu62E.json" 
-              background="transparent" speed="1"
-              style={{ width: '30rem', height: '8rem'}} loop autoplay> </dotlottie-player>
+              src="https://lottie.host/9e0025fc-4108-4796-a385-68eed2cc5a47/Cyz39vu62E.json"
+              background="transparent"
+              speed="1"
+              style={{ width: '100%', height: '8rem' }}
+              loop
+              autoplay
+            ></dotlottie-player>
           ))}
         </div>
-
-      <div className="flex space-x-1.5 ">
+        
+        <div className="flex space-x-1.5">
           {[...Array(1)].map((_, index) => (
             <dotlottie-player
               key={index}
               ref={el => lottieRefs.current[index] = el}
-              src="https://lottie.host/b257acf0-ef3e-45a1-8af1-3c15ca723652/6W6BuM2E6z.json" 
-              background="transparent" speed="1"
-              style={{ width: '30rem', height: '8rem'}} loop autoplay={false}> </dotlottie-player>
+              src="https://lottie.host/b257acf0-ef3e-45a1-8af1-3c15ca723652/6W6BuM2E6z.json"
+              background="transparent"
+              speed="1"
+              style={{ width: '100%', height: '8rem' }}
+              loop
+              autoplay={false}
+            ></dotlottie-player>
           ))}
         </div>
-
-
+        
         <div className="text-center font-bold mb-20 text-[#080f02]">
-        {audioSources[currentTrackIndex]?.title || 'Loading...'}
-      </div>
-
-        <input type="range" min="0" max="100" value={seekValue} onChange={handleSeek} className="w-full" />
-
-        <div className="flex items-center justify-between text-sm sm:text-base">
-          <button onClick={playPreviousTrack}>
-            <FontAwesomeIcon icon={faStepBackward} className="text-lg " />
-          </button>
-
-          <button className='text-yellow-500' onClick={togglePlay}>
-            <FontAwesomeIcon icon={isPlaying ? faCirclePause : faCirclePlay} className="text-xl" />
-          </button>
-
-          <button onClick={playNextTrack}>
-            <FontAwesomeIcon icon={faStepForward} className="text-lg" />
-          </button>
-
-          <button>
-            <FontAwesomeIcon icon={faRotateRight} className="text-lg" />
-          </button>
-
-          <select
-            value={playbackSpeed} onChange={handleSpeedChange} className="border-none bg-transparent text-base" >
-            <option  className='bg-transparent' value="0.5">0.5x</option>
-            <option className='bg-transparent'  value="1">1x</option>
-            <option className='bg-transparent'  value="1.5">1.5x</option>
-            <option  className='bg-transparent' value="2">2x</option>
-            <option  className='bg-transparent' value="2.5">2.5x</option>
-          </select>
-
-          <div className="flex items-center space-x-2">
-            <button onClick={toggleMute}>
-            {isMuted ? <BiSolidVolumeMute className='font-bold'/> : < GoUnmute className='font-bold'/>} 
-            </button>
-            <input
-              type="range" min="0" max="1" step="0.01" value={volume} onChange={handleVolumeChange} className="w-20" />
-          </div>
-
-          <div className="text-sm">
-            <span>{currentTime}/</span>
-            <span>{duration}</span>
-          </div>
+          {audioSources[currentTrackIndex]?.title || 'Loading...'}
         </div>
-      </div>
-
-      <audio type="audio/mpeg"
-        ref={audioRef} src={audioSources[currentTrackIndex]?.src} onEnded={() => 
-          { playNextTrack(); setIsPlaying(false); }} onError={(e) => console.error("Audio error", e)}> </audio>
-    </div>
-
+        
+        <input type="range" min="0" max="100" value={seekValue} onChange={handleSeek} className="w-full" />
+        
+        <div className="flex items-center justify-between text-sm sm:text-base">
+  <div className="flex items-center space-x-2">
+    <button onClick={playPreviousTrack}>
+      <FontAwesomeIcon icon={faStepBackward} className="text-lg" />
+    </button>
     
+    <button className='text-yellow-500' onClick={togglePlay}>
+      <FontAwesomeIcon icon={isPlaying ? faCirclePause : faCirclePlay} className="text-xl" />
+    </button>
+    
+    <button onClick={playNextTrack}>
+      <FontAwesomeIcon icon={faStepForward} className="text-lg" />
+    </button>
+  </div>
+
+  <button>
+    <FontAwesomeIcon icon={faRotateRight} className="text-lg" />
+  </button>
+  
+  <select
+    value={playbackSpeed}
+    onChange={handleSpeedChange}
+    className="border-none bg-transparent text-base"
+  >
+    <option className='bg-transparent' value="0.5">0.5x</option>
+    <option className='bg-transparent' value="1">1x</option>
+    <option className='bg-transparent' value="1.5">1.5x</option>
+    <option className='bg-transparent' value="2">2x</option>
+    <option className='bg-transparent' value="2.5">2.5x</option>
+  </select>
+  
+  <div className="flex items-center space-x-2">
+    <button onClick={toggleMute}>
+      {isMuted ? <BiSolidVolumeMute className='font-bold'/> : <GoUnmute className='font-bold'/>}
+    </button>
+    <input
+      type="range"
+      min="0"
+      max="1"
+      step="0.01"
+      value={volume}
+      onChange={handleVolumeChange}
+      className="w-20 hidden sm:block"
+    />
+  </div>
+  
+  <div className="text-sm">
+    <span>{currentTime}/</span>
+    <span>{duration}</span>
+  </div>
+</div>
+
+      </div>
+      
+      <audio
+        type="audio/mpeg"
+        ref={audioRef}
+        src={audioSources[currentTrackIndex]?.src}
+        onEnded={() => { playNextTrack(); setIsPlaying(false); }}
+        onError={(e) => console.error("Audio error", e)}
+      ></audio>
+    </div>
   );
+
 };
 
 export default MusicPlayer;
