@@ -42,15 +42,22 @@ const MusicPlayer = ({ tracks }) => {
       const sources = await Promise.all(
         tracks.map(async (track) => {
           try {
-            // Updated import path to use the songs folder inside components
-            const audioModule = await import(/* @vite-ignore */ `${track.src}` );
-            return { ...track, src: audioModule.default };
+            const audio = new Audio(track.src);
+            return new Promise((resolve) => {
+              audio.addEventListener('loadeddata', () => {
+                resolve({ ...track, audio });
+              });
+              audio.addEventListener('error', () => {
+                console.error(`Failed to load audio: ${track.src}`);
+                resolve({ ...track, audio: null });
+              });
+            });
           } catch (error) {
-            console.error(`Failed to load audio: ${track.src}`, error);
-            return { ...track, src: '' };
+            console.error(`Error loading audio for ${track.src}:`, error);
+            return { ...track, audio: null };
           }
         })
-      );
+      ); 
       setAudioSources(sources);
     };
 
