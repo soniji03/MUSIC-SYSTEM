@@ -43,7 +43,7 @@ const MusicPlayer = ({ tracks }) => {
         tracks.map(async (track) => {
           try {
             // Updated import path to use the songs folder inside components
-            const audioModule = await import(/* @vite-ignore */ `../songs/${track.src}`);
+            const audioModule = await import(/* @vite-ignore */ `${track.src}`);
             return { ...track, src: audioModule.default };
           } catch (error) {
             console.error(`Failed to load audio: ${track.src}`, error);
