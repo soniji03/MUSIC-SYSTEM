@@ -43,7 +43,7 @@ const MusicPlayer = ({ tracks }) => {
         tracks.map(async (track) => {
           try {
             // Updated import path to use the songs folder inside components
-            const audioModule = await import(/* @vite-ignore */ `${track.src}`);
+            const audioModule = await import(/* @vite-ignore */ `${track.src}` );
             return { ...track, src: audioModule.default };
           } catch (error) {
             console.error(`Failed to load audio: ${track.src}`, error);
@@ -228,7 +228,7 @@ useEffect(() => {
         </div>
       </div>
 
-      <audio
+      <audio type="audio/mpeg"
         ref={audioRef} src={audioSources[currentTrackIndex]?.src} onEnded={() => 
           { playNextTrack(); setIsPlaying(false); }} onError={(e) => console.error("Audio error", e)}> </audio>
     </div>
