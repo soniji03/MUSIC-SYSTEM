@@ -139,6 +139,13 @@ useEffect(() => {
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  const restartSong = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0; 
+      audioRef.current.play();          
+    }
+  };
+
   const backgroundStyle = {
     position: 'relative',
     height: '100vh',
@@ -202,8 +209,8 @@ useEffect(() => {
         
         <input type="range" min="0" max="100" value={seekValue} onChange={handleSeek} className="w-full" />
         
-        <div className="flex items-center justify-between text-sm sm:text-base">
-  <div className="flex items-center space-x-2">
+        <div className="flex items-center justify-between lg:gap-9 text-sm sm:text-base gap-3">
+  <div className="flex items-center lg:gap-6 space-x-2 gap-3">
     <button onClick={playPreviousTrack}>
       <FontAwesomeIcon icon={faStepBackward} className="text-lg" />
     </button>
@@ -217,7 +224,7 @@ useEffect(() => {
     </button>
   </div>
 
-  <button>
+  <button onClick={restartSong}>
     <FontAwesomeIcon icon={faRotateRight} className="text-lg" />
   </button>
   
